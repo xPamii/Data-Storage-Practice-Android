@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DataStorage">
         <activity
+            android:name=".activity.InternalStorageActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.SharePreferenceActivity"
             android:exported="true">
             <intent-filter>
