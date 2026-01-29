@@ -47,6 +47,21 @@ public class SQLiteActivity extends AppCompatActivity {
     //Update Data
     private void updateData() {
 
+        SQLiteHelper sqLiteHelper = SQLiteHelper.getInstance(this);
+        SQLiteDatabase writableDatabase = sqLiteHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put("age", "25");
+
+        //UPDATE `student` SET `age` = ? WHERE `id` = ?
+        //new String[]{1} ==> Incorrect data passing (String array =! Integer value)
+        //new String[]{String.valueOf(1)} ==> Passing parameter as String array
+        //Complete query ==> UPDATE `student` SET `age` = '25' WHERE `id` = 1;
+
+        // ? is used to prevent SQL injection. It is used to prevent SQL injection.
+        writableDatabase.update("student", values, "id=?", new String[]{String.valueOf(1)});
+        //new String[]{String.valueOf(1), String.valueOf(true)}
+        //Complete query ==> UPDATE `student` SET `age` = '25' WHERE `id` = 1 AND `isLogged` = 'true';
     }
 
     //Delete Data
