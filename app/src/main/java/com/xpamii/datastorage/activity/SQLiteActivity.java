@@ -1,6 +1,7 @@
 package com.xpamii.datastorage.activity;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -112,6 +113,18 @@ public class SQLiteActivity extends AppCompatActivity {
     //Search Data
     private void searchData() {
 
+        SQLiteHelper sqLiteHelper = SQLiteHelper.getInstance(this);
+        SQLiteDatabase readableDatabase = sqLiteHelper.getReadableDatabase();
+
+        Cursor cursor = readableDatabase.rawQuery("SELECT * FROM `student`", null);
+        if (cursor.moveToFirst()) {
+            do {
+                String name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
+                Log.d(SQLiteActivity.class.getSimpleName(), "Student Name : " + name);
+
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
     }
 
 
