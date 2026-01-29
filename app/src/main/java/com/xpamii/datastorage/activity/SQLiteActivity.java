@@ -3,6 +3,8 @@ package com.xpamii.datastorage.activity;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
@@ -28,6 +30,35 @@ public class SQLiteActivity extends AppCompatActivity {
         updateButton = findViewById(R.id.updateButton);
         deleteButton = findViewById(R.id.deleteButton);
         searchButton = findViewById(R.id.searchButton);
+
+        insertButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                insertData();
+            }
+        });
+
+        updateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateData();
+            }
+        });
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteData();
+            }
+        });
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchData();
+            }
+        });
+
 
     }
 
@@ -66,6 +97,15 @@ public class SQLiteActivity extends AppCompatActivity {
 
     //Delete Data
     private void deleteData() {
+
+        SQLiteHelper sqLiteHelper = SQLiteHelper.getInstance(this);
+        SQLiteDatabase writableDatabase = sqLiteHelper.getWritableDatabase();
+
+        int deleted = writableDatabase.delete("student", "id=?", new String[]{String.valueOf(1)});
+        //new String[]{String.valueOf(1), String.valueOf(true)}
+        //Complete query ==> DELETE FROM `student` WHERE `id` = 1 AND `isLogged` = 'true';
+        //deleted = 1;
+        Log.d(SQLiteActivity.class.getSimpleName(), "deletedData : " + deleted); // deleted count. If deleted count is 0, then no data is deleted.
 
     }
 
